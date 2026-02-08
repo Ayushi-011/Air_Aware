@@ -1,5 +1,5 @@
 from fastapi import APIRouter,Request
-from services.ip_service import diff_ip
+from services.ip_service import get_ip
 from services.geo_service import get_loc
 from services.aqi_service import get_aqi
 from models.schemas import Op
@@ -8,7 +8,7 @@ router = APIRouter()
 
 @router.get("/aqi")
 async def home( ip1:Request, Response_model=Op):
-    ip = await diff_ip()
+    ip = await get_ip(ip1)
     loc = await get_loc(ip)
     aqi = await get_aqi(loc.get("latitude"),loc.get("longitude"))
     category = "Not-Defined"
@@ -43,5 +43,6 @@ async def home( ip1:Request, Response_model=Op):
         },
         "src" : "open-meteo"
     } 
+
 
     
