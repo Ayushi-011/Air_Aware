@@ -7,8 +7,8 @@ from models.schemas import Op
 router = APIRouter()
 
 @router.get("/aqi")
-async def home( ip1:Request, Response_model=Op):
-    ip = await get_ip(ip1)
+async def home( ip1:Request, ip2:str=None, Response_model=Op):
+    ip = await get_ip(ip1,ip2)
     loc = await get_loc(ip)
     aqi = await get_aqi(loc.get("latitude"),loc.get("longitude"))
     category = "Not-Defined"
@@ -46,3 +46,4 @@ async def home( ip1:Request, Response_model=Op):
 
 
     
+
